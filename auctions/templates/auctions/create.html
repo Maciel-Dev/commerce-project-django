@@ -1,0 +1,43 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2 class="font-weight-bold text-center mb-5">Create new Listing</h2>
+
+    <form method="post" action="{% url 'create' %}">
+    {% csrf_token %}
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" class="form-control" id="title" aria-describedby="title">
+            <small id="titleHelper" class="form-text text-muted">Choose the title of your listing</small>
+        </div>
+        <div class="form-group">
+            <label for="desc">Description</label>
+            <input type="text" name="desc" class="form-control" id="desc" aria-describedby="desc">
+            <small id="descHelper" class="form-text text-muted">Choose the Description of your listing</small>
+        </div>
+        <div class="form-group">
+            <label for="imageTxt">ImageUrl</label>
+            <input type="text" name="imageTxt" class="form-control" id="imageTxt" aria-describedby="imageTxt">
+            <small id="imageTxt" class="form-text text-muted">Choose the title of your listing</small>
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" name="price" class="form-control" id="price" aria-describedby="price">
+            <small id="priceHelper" class="form-text text-muted">Choose the price of your listing</small>
+        </div>
+        <div class="form-group">
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select class="form-control" name="category" id="category">
+                <option selected="selected">Select An Option</option>
+                    {% for category in category_list %}
+                        <option value="{{ category }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary text-right">Submit</button>
+            </div>
+    </form>
+{% endblock %}
