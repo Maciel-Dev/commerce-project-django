@@ -9,8 +9,12 @@ from .models import Category
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html", {
+        "listings": Listing.objects.all()
+    })
 
+def item_show(request):
+    return render(request, "auctions/item.html")
 
 def create_listing(request):
     if request.method == "GET":
