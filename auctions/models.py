@@ -5,6 +5,7 @@ from django.db import models
 class User(AbstractUser):
     pass
 
+
 class Category(models.Model):
     name = models.CharField(max_length=30)
 
@@ -23,4 +24,16 @@ class Listing(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Bid(models.Model):
+    auctioneer = models.ForeignKey(User, on_delete=models.RESTRICT, blank=True, null=False, related_name="auctioneer")
+    product = models.ForeignKey(Listing, on_delete=models.RESTRICT, blank=True, null=False, related_name="product")
+    bid_price = models.FloatField()
+
+
+class Comment(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.RESTRICT, blank=True, null=False, related_name="user_id")
+    listing_id = models.ForeignKey(Listing, on_delete=models.RESTRICT, blank=True, null=False, related_name="listing_id")
+    commentary = models.CharField(max_length=255)
 

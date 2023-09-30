@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h3 class="text-center font-weight-bold">
+        {{ product.title }}
+    </h3>
+    <div class="text-center">
+        <img src="{{ product.imageURL }}" class="rounded img-fluid" style="width: 30%" alt="Responsive image">
+    </div>
+    <div>
+
+    </div>
+    <form>
+        <div class="form-group">
+            <label for="bid_value">Email address</label>
+            <input type="number" class="form-control" id="bid_value" aria-describedby="bid_value"
+                   placeholder="Place your bid">
+            <small id="bidHelp" class="form-text text-muted">Place a bid</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Place my Bid</button>
+    </form>
+    <div class="">
+        <button type="button" class="btn text-white mt-3" style="background-color: gray">❤ Save to my Watchlist</button>
+    </div>
+
+{% endblock %}

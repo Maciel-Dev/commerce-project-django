@@ -13,8 +13,13 @@ def index(request):
         "listings": Listing.objects.all()
     })
 
-def item_show(request):
-    return render(request, "auctions/item.html")
+
+def listing(request, id):
+    if request.method == "GET":
+        return render(request, "auctions/listing.html", {
+            "product": Listing.objects.get(pk=id)
+        })
+
 
 def create_listing(request):
     if request.method == "GET":

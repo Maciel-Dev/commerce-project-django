@@ -11,7 +11,7 @@
                     <h5 class="card-title font-weight-bold">{{ product.title }}</h5>
                     <p class="card-text">{{ product.description }}</p>
                     <p class="card-text font-weight-bold">Category: {{ product.category }}</p>
-                    <a href="#" class="btn btn-primary">Explore</a>
+                    <a href="{% url 'listing' id=product.id %}" class="btn btn-primary">Make a Bid</a>
                 </div>
             </div>
         </div>
