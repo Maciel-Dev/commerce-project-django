@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -7,7 +9,7 @@ class User(AbstractUser):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
         return self.name
@@ -27,13 +29,17 @@ class Listing(models.Model):
 
 
 class Bid(models.Model):
-    auctioneer = models.ForeignKey(User, on_delete=models.RESTRICT, blank=True, null=False, related_name="auctioneer")
-    product = models.ForeignKey(Listing, on_delete=models.RESTRICT, blank=True, null=False, related_name="product")
+    auctioneer = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=False, related_name="auctioneer")
+    product = models.ForeignKey(Listing, on_delete=models.CASCADE, blank=True, null=False, related_name="product")
     bid_price = models.FloatField()
 
 
 class Comment(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.RESTRICT, blank=True, null=False, related_name="user_id")
-    listing_id = models.ForeignKey(Listing, on_delete=models.RESTRICT, blank=True, null=False, related_name="listing_id")
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=False, related_name="user_id")
+    listing_id = models.ForeignKey(Listing, on_delete=models.CASCADE, blank=True, null=False, related_name="listing_id")
     commentary = models.CharField(max_length=255)
+    creation_date = models.DateTimeField(default=datetime.date, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user_id}-{self.listing_id}-{self.creation_date}"
 

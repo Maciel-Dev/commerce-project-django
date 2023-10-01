@@ -1,10 +1,12 @@
+import datetime
+
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing
+from .models import User, Listing, Comment
 from .models import Category
 
 
@@ -17,8 +19,31 @@ def index(request):
 def listing(request, id):
     if request.method == "GET":
         return render(request, "auctions/listing.html", {
-            "product": Listing.objects.get(pk=id)
+            "product": Listing.objects.get(pk=id),
+            "comment": Comment.objects.filter(listing_id=id),
+            "id": id
         })
+
+    elif request.method == "POST":
+        if request.POST.get("form-comment") == "comment":
+            user = request.user
+            product = request.listing
+            creation_date = datetime.date
+            commentary = request.POST["commentary"]
+
+            newComment = Comment(
+                user_id=user,
+                listing_id=product,
+                creation_date=creation_date,
+                commentary=commentary
+            )
+
+            newComment.save()
+            return HttpResponseRedirect(reverse(listing))
+
+        else:
+            print("AQUI")
+            return HttpResponseRedirect(reverse(index))
 
 
 def create_listing(request):
@@ -31,24 +56,24 @@ def create_listing(request):
     elif request.method == "POST":
         title = request.POST["title"]
         description = request.POST["desc"]
-        imageURL = request.POST["imageTxt"]
+        image_url = request.POST["imageTxt"]
         price = request.POST["price"]
         category = request.POST["category"]
         user = request.user
 
-        categoryObj = Category.objects.get(name=category)
+        category_obj = Category.objects.get(name=category)
 
-        newListing = Listing(
+        new_listing = Listing(
             title=title,
             description=description,
-            imageURL=imageURL,
+            imageURL=image_url,
             price=price,
             active=True,
             owner=user,
-            category=categoryObj
+            category=category_obj
         )
 
-        newListing.save()
+        new_listing.save()
         return HttpResponseRedirect(reverse(index))
 
 

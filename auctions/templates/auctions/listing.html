@@ -7,12 +7,9 @@
     <div class="text-center">
         <img src="{{ product.imageURL }}" class="rounded img-fluid" style="width: 30%" alt="Responsive image">
     </div>
-    <div>
-
-    </div>
-    <form>
+    <form method="POST" id="form-bid">
         <div class="form-group">
-            <label for="bid_value">Email address</label>
+            <label for="bid_value">My bid</label>
             <input type="number" class="form-control" id="bid_value" aria-describedby="bid_value"
                    placeholder="Place your bid">
             <small id="bidHelp" class="form-text text-muted">Place a bid</small>
@@ -22,5 +19,62 @@
     <div class="">
         <button type="button" class="btn text-white mt-3" style="background-color: gray">❤ Save to my Watchlist</button>
     </div>
+
+    <div>
+        <h2>
+            Comments
+        </h2>
+        {% for com in comment %}
+            <section style="background-color: #e7effd;">
+                <div class="container  text-dark">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-11 col-lg-9 col-xl-7">
+                            <div class="d-flex flex-start mb-2">
+                                <div class="card w-100">
+                                    <div class="card-body p-4">
+                                        <div class="">
+                                            <h5>{{ com.user_id }}</h5>
+                                            <p class="small">TEMPO - **</p>
+                                            <p>
+                                                {{ com.commentary }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endfor %}
+    </div>
+    <form method="POST" id="form-comment" value="comment" action="{% url 'listing' id=id %}">
+    {% csrf_token %}
+        <div>
+            <section style="background-color: #d94125;">
+                <div class="container my-5 py-5 text-dark">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-10 col-lg-8 col-xl-6">
+                            <div class="card">
+                                <div class="card-body p-4">
+                                    <div class="d-flex flex-start w-100">
+                                        <div class="form-outline">
+                                        <input class="form-control" id="commentary" type="text"></input>
+                                            <label class="form-label" for="commentary">What is your view?</label>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <button type="submit" class="btn btn-danger w-100">
+                                            Send
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </form>
 
 {% endblock %}
